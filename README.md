@@ -48,8 +48,7 @@ service heartbeat-elastic start
 ![](result/Screenshot_43.png)
 
 
-Для filebit используем одно из предыдущих занятий [https://github.com/pal-stark/otus-lab-5](https://github.com/pal-stark/otus-lab-5). 
-
+Устанавливаем filebeat
 
 Добавляем строки в /etc/rsyslog.d/sshd.conf
 
@@ -59,7 +58,6 @@ service heartbeat-elastic start
 ```
 Этим мы перенаправляем логи sshd в отдельный файл.
 
-Filebeat же настроен отдавать логи в elasticsearch через logstash.
 
 Разрешаем использовать модуль system
 ```bash
@@ -84,6 +82,7 @@ service filebeat restart
 Прверяем вывод логов. Пробуем залогиниться на сервере по ssh.
 
 Смотрим результат в elasticsearch.
+![](result/Screenshot_44.png)
 
 
 
