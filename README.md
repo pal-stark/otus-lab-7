@@ -27,7 +27,6 @@ rpm -ivh https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-7.9.1-
 Настраиваем heartbeat
 
 
-
 Проверяем настройки 
 ```bash
 heartbeat setup -e
@@ -39,4 +38,52 @@ service heartbeat-elastic start
 
 Идём в elasticsearch и проверяем наличие индекса heartbeat. 
 Добавляем индекс паттерн для нового индекса.
+
+Смотрим результат.
+![](result/Screenshot_42.png)
+
+Аналогично настраиваем metricbeat
+
+Смотрим результат.
+![](result/Screenshot_43.png)
+
+
+Для filebit используем одно из предыдущих занятий [https://github.com/pal-stark/otus-lab-5](https://github.com/pal-stark/otus-lab-5). 
+
+
+Добавляем строки в /etc/rsyslog.d/sshd.conf
+
+```plaintext
+:programname, isequal, "sshd" /var/log/sshd.log
+:programname, isequal, "sshd" stop[root@work rsyslog.d]
+```
+Этим мы перенаправляем логи sshd в отдельный файл.
+
+Filebeat же настроен отдавать логи в elasticsearch через logstash.
+
+Разрешаем использовать модуль system
+```bash
+filebeat modules  enable system
+```
+
+Добавляем строку в /etc/filebeat/modules.d/system.yml
+```plaintext
+    var.paths: ["/var/log/sshd.log"]
+```
+Так чтобы отправлялась информация только из sshd.log.
+
+
+Тестируем конфиг 
+```bash
+filebeat test config
+```
+Перезапускаем filebeat
+```bash
+service filebeat restart
+```
+Прверяем вывод логов. Пробуем залогиниться на сервере по ssh.
+
+Смотрим результат в elasticsearch.
+
+
 
