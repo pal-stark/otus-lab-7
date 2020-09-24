@@ -50,26 +50,11 @@ service heartbeat-elastic start
 
 Устанавливаем filebeat
 
-Добавляем строки в /etc/rsyslog.d/sshd.conf
-
-```plaintext
-:programname, isequal, "sshd" /var/log/sshd.log
-:programname, isequal, "sshd" stop[root@work rsyslog.d]
-```
-Этим мы перенаправляем логи sshd в отдельный файл.
-
 
 Разрешаем использовать модуль system
 ```bash
 filebeat modules  enable system
 ```
-
-Добавляем строку в /etc/filebeat/modules.d/system.yml
-```plaintext
-    var.paths: ["/var/log/sshd.log"]
-```
-Так чтобы отправлялась информация только из sshd.log.
-
 
 Тестируем конфиг 
 ```bash
@@ -85,4 +70,19 @@ service filebeat restart
 ![](result/Screenshot_44.png)
 
 
+Добавляем строки в /etc/rsyslog.d/sshd.conf
 
+```plaintext
+:programname, isequal, "sshd" /var/log/sshd.log
+:programname, isequal, "sshd" stop[root@work rsyslog.d]
+```
+Этим мы перенаправляем логи sshd в отдельный файл.
+
+
+Добавляем строку в /etc/filebeat/modules.d/system.yml
+```plaintext
+    var.paths: ["/var/log/sshd.log"]
+```
+Так чтобы отправлялась информация только из sshd.log.
+
+И ничего не получается ....
