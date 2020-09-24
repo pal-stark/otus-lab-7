@@ -74,7 +74,7 @@ service filebeat restart
 
 ```plaintext
 :programname, isequal, "sshd" /var/log/sshd.log
-:programname, isequal, "sshd" stop[root@work rsyslog.d]
+:programname, isequal, "sshd" stop
 ```
 Этим мы перенаправляем логи sshd в отдельный файл.
 
@@ -85,4 +85,4 @@ service filebeat restart
 ```
 Так чтобы отправлялась информация только из sshd.log.
 
-И ничего не получается ....
+![](result/Screenshot_45.png)
