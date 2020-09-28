@@ -24,8 +24,11 @@ rpm -ivh https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.9.1-x8
 rpm -ivh https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-7.9.1-x86_64.rpm
 ```
 
-Настраиваем heartbeat
+Настраиваем heartbeat:
 
+Основная настройка [heartbeat.yml](etc%2Fheartbeat%2Fheartbeat.yml)
+
+Настройка модуля icmp [icmp.yml](etc%2Fheartbeat%2Fmodules.d%2Ficmp.yml)
 
 Проверяем настройки 
 ```bash
@@ -44,12 +47,20 @@ service heartbeat-elastic start
 
 Аналогично настраиваем metricbeat
 
+[metricbeat.yml](etc%2Fmetricbeat%2Fmetricbeat.yml)
+
+Подключаем модуль system и разрешаем просмотр memory и cpu
+
+[system.yml](etc%2Fmetricbeat%2Fmodules.d%2Fsystem.yml)
+
+
 Смотрим результат.
 ![](result/Screenshot_43.png)
 
 
 Устанавливаем filebeat
 
+[filebeat.yml](etc%2Ffilebeat%2Ffilebeat.yml)
 
 Разрешаем использовать модуль system
 ```bash
@@ -77,12 +88,14 @@ service filebeat restart
 :programname, isequal, "sshd" stop
 ```
 Этим мы перенаправляем логи sshd в отдельный файл.
-
+[sshd.conf](etc%2Frsyslog.d%2Fsshd.conf)
 
 Добавляем строку в /etc/filebeat/modules.d/system.yml
 ```plaintext
     var.paths: ["/var/log/sshd.log"]
 ```
 Так чтобы отправлялась информация только из sshd.log.
+[system.yml](etc%2Ffilebeat%2Fmodules.d%2Fsystem.yml)
 
 ![](result/Screenshot_45.png)
+
